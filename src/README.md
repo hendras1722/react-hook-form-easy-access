@@ -12,11 +12,21 @@ A composable, flexible form library for React, built on top of `react-hook-form`
 
 ## Installation
 
-Ensure you have the required dependencies installed in your project:
+How to install react-hook-form-easy-access:
 
 ```bash
-npm install react-hook-form @hookform/resolvers zod
-# or your preferred validation library (yup, joi, etc.)
+npm install react-hook-form-easy-access react-hook-form @hookform/resolvers
+
+# choose validator
+npm install zod
+#or
+npm install yup
+#or
+npm install joi
+#or
+npm install superstruct
+#or
+npm install vest
 ```
 
 ## Usage
@@ -26,7 +36,7 @@ npm install react-hook-form @hookform/resolvers zod
 The `Form` component acts as a provider, and `FormField` handles individual inputs.
 
 ```tsx
-import { Form, FormField } from "./src"; // Adjust path
+import { Form, FormField } from "react-hook-form-easy-access";
 import { z } from "zod";
 
 // 1. Define Schema
@@ -100,9 +110,9 @@ If you need access to form methods like `reset`, `setValue`, or `isPending` insi
 Use `useFormField` (which wraps `useFieldArray`) to handle dynamic lists.
 
 ```tsx
-import { Form, FormField, useFormField } from "./src";
+import { Form, FormField } from "react-hook-form-easy-access";
 
-function DynamicList() {
+function DynamicList({ useFieldArray }) {
   // This hook must be used inside a component that is a child of <Form>
   // OR use the render prop pattern to access `useFieldArray` directly.
   const { fields, append, remove } = useFormField("items");
@@ -126,8 +136,41 @@ function DynamicList() {
 
 // Usage
 <Form onSubmit={...}>
-  <DynamicList />
-  <button type="submit">Save</button>
+{
+  ({useFieldArray}) =>  <DynamicList useFieldArray={useFieldArray} />
+}
+
+// or you can use This
+
+{
+  ({useFieldArray}) => {
+     const { fields, append, remove } = useFieldArray("address");
+     return (
+        {fields.map((field, index) => (
+            <div key={field.id} className="mb-3 p-3 border rounded-lg border-white/20">
+              <FormField name={`address.${index}.street`} label="Street" required>
+                <input placeholder="Input here" />
+              </FormField>
+
+              <FormField name={`address.${index}.city`} label="City" required>
+                <input placeholder="Input here" />
+              </FormField>
+
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="mt-2 w-full"
+              >
+                Delete Address
+              </button>
+            </div>
+          ))
+          ...etc
+        )
+      }     
+    )
+  }
+}
 </Form>
 ```
 
@@ -145,7 +188,7 @@ The root component that provides context to all fields.
 | `children` | `ReactNode \| (methods) => ReactNode` | Form content. Can be a function to access form methods. |
 | `className` | `string` | CSS class for the `<form>` element. |
 | `config` | `UseFormProps` | Additional configuration for `react-hook-form`. |
-| `ref` | `Ref<FormRef>` | Exposes `submit()` and `validate()` methods. |
+| `ref` | `Ref<FormRef>` | Exposes return by useForm as setFocus, setError, etc methods. |
 
 ### `<FormField />`
 

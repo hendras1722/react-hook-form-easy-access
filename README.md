@@ -12,10 +12,21 @@ A composable, flexible form library for React, built on top of `react-hook-form`
 
 ## Installation
 
-How to install react-hook-form-easy:
+How to install react-hook-form-easy-access:
 
 ```bash
-npm install react-hook-form-easy
+npm install react-hook-form-easy-access react-hook-form @hookform/resolvers
+
+# choose validator
+npm install zod
+#or
+npm install yup
+#or
+npm install joi
+#or
+npm install superstruct
+#or
+npm install vest
 ```
 
 ## Usage
@@ -25,7 +36,7 @@ npm install react-hook-form-easy
 The `Form` component acts as a provider, and `FormField` handles individual inputs.
 
 ```tsx
-import { Form, FormField } from "react-hook-form-easy";
+import { Form, FormField } from "react-hook-form-easy-access";
 import { z } from "zod";
 
 // 1. Define Schema
@@ -99,7 +110,7 @@ If you need access to form methods like `reset`, `setValue`, or `isPending` insi
 Use `useFormField` (which wraps `useFieldArray`) to handle dynamic lists.
 
 ```tsx
-import { Form, FormField } from "react-hook-form-easy";
+import { Form, FormField } from "react-hook-form-easy-access";
 
 function DynamicList({ useFieldArray }) {
   // This hook must be used inside a component that is a child of <Form>
