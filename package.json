@@ -1,0 +1,35 @@
+{
+  "name": "react-hook-form-easy",
+  "version": "1.0.0",
+  "description": "Form using react hooks form very easy to use",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "files": [
+    "/lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs"
+  },
+  "author": "Muh Syahendra A",
+  "license": "ISC",
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "ofetch": "^1.4.1",
+    "react-hook-form": "^7.66.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "http": "^0.0.1-security",
+    "react": "workspace:*",
+    "react-dom": "workspace:*"
+  },
+  "workspaces": [
+    "packages/vite-project/*"
+  ]
+}
