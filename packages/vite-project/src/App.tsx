@@ -1,5 +1,5 @@
 import z from "zod";
-import { Form, FormField } from "./playground";
+import { Form, FormField, useFormField } from "./playground";
 import { useRef } from "react";
 import type { FormRef } from "./playground/Form";
 
@@ -17,6 +17,44 @@ const schema = z.object({
 });
 
 type LoginFormData = z.infer<typeof schema>;
+
+function AddressFields() {
+  const { fields, append, remove } = useFormField("address");
+
+  return (
+    <div className="mb-4">
+      <label className="block text-white font-semibold mb-1">Alamat</label>
+
+      {fields.map((field, index) => (
+        <div key={field.id} className="mb-3 p-3 border rounded-lg border-white/20">
+          <FormField name={`address.${index}.street`} label="Street" required>
+            <input placeholder="Jl. Mawar No. 1" />
+          </FormField>
+
+          <FormField name={`address.${index}.city`} label="City" required>
+            <input placeholder="Jakarta" />
+          </FormField>
+
+          <button
+            type="button"
+            onClick={() => remove(index)}
+            className="mt-2 w-full"
+          >
+            Hapus Alamat
+          </button>
+        </div>
+      ))}
+
+      <button
+        type="button"
+        onClick={() => append({ street: "", city: "" })}
+        className="w-full mb-4 bg-green-600 text-white"
+      >
+        + Tambah Alamat
+      </button>
+    </div>
+  );
+}
 
 export default function LoginPage() {
   const formRef = useRef<FormRef<LoginFormData>>(null);
@@ -63,8 +101,7 @@ export default function LoginPage() {
             mode: "onChange",
           }}
         >
-          {({ isPending, useFieldArray }) => {
-            const { fields, append, remove } = useFieldArray("address");
+          {({ isPending }) => {
        
             return (
               <>
@@ -76,37 +113,7 @@ export default function LoginPage() {
                   <input type="password" placeholder="****" />
                 </FormField>
 
-                <div className="mb-4">
-                  <label className="block text-white font-semibold mb-1">Alamat</label>
-
-                  {fields.map((field, index) => (
-                    <div key={field.id} className="mb-3 p-3 border rounded-lg border-white/20">
-                      <FormField name={`address.${index}.street`} label="Street" required>
-                        <input placeholder="Jl. Mawar No. 1" />
-                      </FormField>
-
-                      <FormField name={`address.${index}.city`} label="City" required>
-                        <input placeholder="Jakarta" />
-                      </FormField>
-
-                      <button
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="mt-2 w-full"
-                      >
-                        Hapus Alamat
-                      </button>
-                    </div>
-                  ))}
-
-                  <button
-                    type="button"
-                    onClick={() => append({ street: "", city: "" })}
-                    className="w-full mb-4 bg-green-600 text-white"
-                  >
-                    + Tambah Alamat
-                  </button>
-                </div>
+                <AddressFields />
 
                 <button
                   disabled={isPending}

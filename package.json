@@ -1,6 +1,6 @@
 {
   "name": "react-hook-form-easy-access",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Form using react hooks form very easy to use",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
