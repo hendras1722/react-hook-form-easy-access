@@ -12,6 +12,10 @@ A composable, flexible form library for React, built on top of `react-hook-form`
 
 - Fix: update README.md add demo application [https://codesandbox.io/p/sandbox/react-hook-form-easy-access-pxclnl](https://codesandbox.io/p/sandbox/react-hook-form-easy-access-pxclnl)
 
+### v1.0.2
+
+- Fix: add export type `FormRef`
+
 ## Features
 
 - 🧩 **Composable**: Build forms using `Form` and `FormField` components.
